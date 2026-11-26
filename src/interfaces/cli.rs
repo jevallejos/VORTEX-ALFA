@@ -17,7 +17,7 @@ use crate::infrastructure::csv_candle_reader::CsvCandleReader;
 use crate::infrastructure::tape_reader::{StreamingTapeReader, TapeFormat};
 use crate::infrastructure::vkl1_reader::StreamingVkl1Reader;
 
-fn write_json_pretty<T: Serialize>(path: &Path, value: &T) -> Result<(), DomainError> {
+pub(crate) fn write_json_pretty<T: Serialize>(path: &Path, value: &T) -> Result<(), DomainError> {
     let json = serde_json::to_string_pretty(value)
         .map_err(|e| DomainError::Io(format!("json serialize failed: {e}")))?;
     let mut file = File::create(path)
@@ -50,6 +50,7 @@ where
         "scan-micro" => run_scan_micro(&raw[2..]),
         "scan-meso" => run_scan_meso(&raw[2..]),
         "scan-xs" => run_scan_xs(&raw[2..]),
+        "scan-mm" => crate::interfaces::cli_mm::run_scan_mm(&raw[2..]),
         "-h" | "--help" | "help" => Ok(usage_text()),
         other => Err(DomainError::Cli(format!(
             "unknown subcommand '{other}'\n{}",
@@ -59,11 +60,15 @@ where
 }
 
 fn usage_text() -> String {
-    "Usage:\n  vortex-alfa scan-micro --format <par2|vpz1|jsonl> --input <path> [--out <report.json>]\n  vortex-alfa scan-meso --format <csv|vkl1> --input <path> [--slippage-bps <f64>] [--out <report.json>]\n  vortex-alfa scan-xs --format <csv|vkl1> --input <path> [--top-k <usize[,usize...]>] [--slippage-bps <f64>] [--include-btc] [--out <report.json>]"
+    "Usage:\n  vortex-alfa scan-micro --format <par2|vpz1|jsonl> --input <path> [--out <report.json>]\n  vortex-alfa scan-meso --format <csv|vkl1> --input <path> [--slippage-bps <f64>] [--out <report.json>]\n  vortex-alfa scan-xs --format <csv|vkl1> --input <path> [--top-k <usize[,usize...]>] [--slippage-bps <f64>] [--include-btc] [--out <report.json>]\n  vortex-alfa scan-mm --format <par2|vpz1|jsonl> --input <path> [--capital-usdt <f64>] [--clip-usdt <f64>] [--max-inv-clips <f64>] [--out <report.json>]"
         .to_string()
 }
 
-fn take_arg(args: &[String], idx: &mut usize, flag: &str) -> Result<String, DomainError> {
+pub(crate) fn take_arg(
+    args: &[String],
+    idx: &mut usize,
+    flag: &str,
+) -> Result<String, DomainError> {
     *idx += 1;
     args.get(*idx)
         .cloned()
@@ -196,7 +201,7 @@ fn run_scan_xs(args: &[String]) -> Result<String, DomainError> {
     Ok(format_xs_report_ascii(&report))
 }
 
-fn parse_tape_format(raw: &str) -> Result<TapeFormat, DomainError> {
+pub(crate) fn parse_tape_format(raw: &str) -> Result<TapeFormat, DomainError> {
     match raw.to_ascii_lowercase().as_str() {
         "par2" => Ok(TapeFormat::Par2),
         "vpz1" | "par2z" => Ok(TapeFormat::Vpz1),
@@ -314,7 +319,7 @@ fn push_cell_line(lines: &mut Vec<String>, c: &CellEvaluation) {
     ));
 }
 
-fn fmt_opt(val: Option<f64>, prec: usize) -> String {
+pub(crate) fn fmt_opt(val: Option<f64>, prec: usize) -> String {
     match val {
         Some(v) => format!("{v:.prec$}"),
         None => "-".to_string(),

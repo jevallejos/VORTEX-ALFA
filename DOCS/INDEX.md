@@ -1,7 +1,7 @@
 # VORTEX-ALFA — Documentation Index
 
-> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
-> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md)
+> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | Phase 3A Track 4 Designed & Verified (`35/35` tests `ok`, ready for `sniper-tokio` sweep) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
+> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md)
 
 ---
 
@@ -14,6 +14,7 @@
 | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | Empirical Track 2 falsification over 24 months of real Bybit V5 linear perpetuals (`15m`, `1h`, `4h`, 12 pairs, real funding): data integrity manifest, 36-cell primary matrix (`VIP-0 + 1.5 bps` slip), Year 1 vs. Year 2 OOS stability, `$64 USDT` Ex-BTC & per-symbol concentration audit, slippage sensitivity (`0.5 / 1.5 / 3.0 bps`) vs. `DiagZero`, raw PS gates, and final falsification verdict (`0/36 Pass`) | Complete Phase 1A Track 2 sign-off |
 | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | Empirical Track 1 falsification on `sniper-tokio` (`rustc 1.99.1`, `--release`, read-only `/home/ubuntu/vortex-rs/data`) across `20,518,144` (`~20.52M`) real events: Run 1 `.par2z` (`VPZ1`, 12 hourly files, `19,469,568` events) + Run 2 `.parquet` (`PAR2`, `4,096 × 256 = 1,048,576` events), 20-cell `VIP-0` matrix vs. `DiagZero` range, structural `binance_mid = None` audit, and final falsification verdict (`0/20 Pass`) | Complete Phase 1B Track 1 sign-off |
 | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | Empirical Track 3 cross-sectional falsification over 24 months of 30 Bybit V5 linear perpetuals (`4h`, `0:BTCUSDT..29:ICPUSDT`): causal Option A funding aggregation (`INJUSDT` 128 sub-4h events), explicit survivorship bias disclosure, `LaTeX -> archivo:linea` traceability, 27-cell matrix (`K ∈ {1,2,3} × 3 × 3`), Year 1 vs. Year 2 OOS stability, slippage sensitivity (`0.5 / 1.5 / 3.0 bps`) vs. `VIP0-MakerDiag`, `$64 USDT` sizing caveats, raw 6-gate PS7 outputs (`29/29` tests), and final falsification verdict (`0/27 Pass`) | Complete Phase 2 Track 3 sign-off |
+| [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | Phase 3A Track 4 Market Making design & verification closure: 4-D compliance matrix, SRP hexagonal split (`market_making.rs`, `mm_markout.rs`, `mm_fifo_sim.rs`, `mm_accounting.rs`, `falsifier_mm.rs`, `cli_mm.rs`), `LaTeX -> archivo:linea` traceability + homogeneous `[bps]`-space Avellaneda-Stoikov dimensional proof, 5 ms RTT FIFO L1 state machine, `M=6` AS grid & 5-fee frontier (`VIP0_Maker` solely binding + mandatory EOF `5.50 bps` Taker), 6-test `input -> expected -> actual` catalog, raw 6-gate PS7 outputs (`35/35` tests, `32/32` `src/` files `<= 350` lines), and copy-paste `sniper-tokio` sweep commands | Complete Phase 3A Track 4 sign-off |
 
 ---
 
@@ -39,12 +40,17 @@ src/
 │       ├── micro_detectors.rs          # HawkesProcess O(1) Ozaki, ShiryaevRobertsDetector log-space, CausalQuantileWindow
 │       ├── micro_tail.rs               # Track 1 engine: HawkesTail, ShiryaevRobertsJump, LiquidationCascade, CrossExchangeShock
 │       ├── meso_energy.rs              # Track 2 engine: Garman-Klass vol, r_comp, TSMOM-VW, Z-funding Welford
-│       └── cross_sectional.rs          # Track 3 engine: XsFundingCarry, XsResidualReversion, XsMomentumVolAdj, build_dollar_neutral_weights
+│       ├── cross_sectional.rs          # Track 3 engine: XsFundingCarry, XsResidualReversion, XsMomentumVolAdj, build_dollar_neutral_weights
+│       └── market_making.rs            # Track 4 engine: Stoikov microprice, CKS L1 OFI, TFI, EWMA vol, causal tick GCD, [bps]-space AS + PostOnly
 ├── application/                        # Causal multi-horizon falsification orchestrators (depend only on domain)
 │   ├── mod.rs
 │   ├── falsifier_micro.rs              # Track 1 orchestrator: RTT delay, cooldown, non-overlapping slots, VIP-0 + DiagZero dual eval
 │   ├── falsifier_meso.rs               # Track 2 orchestrator: bar t+1 open entry, BarOpenSettlement vs BarCloseSettlement funding
-│   └── falsifier_xs.rs                 # Track 3 orchestrator: 1x gross 2L dollar-neutral, BarOpenSettlement, rolling/EOF turnover, VIP0-Taker vs VIP0-MakerDiag
+│   ├── falsifier_xs.rs                 # Track 3 orchestrator: 1x gross 2L dollar-neutral, BarOpenSettlement, rolling/EOF turnover, VIP0-Taker vs VIP0-MakerDiag
+│   ├── mm_markout.rs                   # Track 4 markout tracker: causal spread capture, 1s/5s/15s markouts, LVR = max(0, -markout)
+│   ├── mm_fifo_sim.rs                  # Track 4 FIFO L1 simulator: 5ms RTT place/replace/cancel, adverse in-flight fills, PostOnly reject, anti-churn
+│   ├── mm_accounting.rs                # Track 4 ledger (i128 Drift==0), 5-profile MM_FEE_FRONTIER, mandatory EOF taker liquidation, breakeven_maker_bps
+│   └── falsifier_mm.rs                 # Track 4 orchestrator: M=6 AS grid, 60s non-overlapping buckets, max gross leverage cap, Holm/NW/DSR eval
 ├── infrastructure/                     # Adapters implementing domain ports & binary codecs
 │   ├── mod.rs
 │   ├── binary_codec.rs                 # Pure-Rust FNV-1a, PAR2 (256B), VPZ1 (36B hdr, Stride-256 XOR-Delta + Zero-RLE), VKL1 (96B)
@@ -53,7 +59,8 @@ src/
 │   └── csv_candle_reader.rs            # CsvCandleReader (ts_ns|ts_ms, funding_rate_bps|funding_rate) implementing CandleSeriesReader
 └── interfaces/                         # CLI presentation & JSON ReportSink adapter
     ├── mod.rs
-    └── cli.rs                          # Subcommands scan-micro, scan-meso & scan-xs, ASCII summary tables, JSON --out writer
+    ├── cli.rs                          # Subcommands scan-micro, scan-meso, scan-xs & scan-mm dispatch, ASCII tables, JSON --out writer
+    └── cli_mm.rs                       # Track 4 scan-mm argument parser, ASCII table + 5-profile fee frontier formatter
 ```
 
 ---
@@ -95,6 +102,17 @@ cargo run --release -- scan-xs --format <csv|vkl1> --input <path> [--top-k <usiz
 - `--top-k` defaults to `3`; comma-separated lists (e.g., `1,2,3`) evaluate a unified global batch across all $K \times 3 \times 3$ cells ($M = 27$).
 - `--slippage-bps` defaults to `1.5` bps per unit of one-way turnover (`>= 0.0`).
 - By default excludes benchmark `SymbolId(0)` (`BTCUSDT`) from traded legs while retaining it for OLS market-beta estimation; `--include-btc` disables this exclusion.
+
+### Track 4 — Market Making Avellaneda-Stoikov Falsifier (`scan-mm`)
+
+Evaluates $M = 6$ Avellaneda-Stoikov configurations in homogeneous `[bps]` space (`AS_Base_Tight`, `AS_Base_Wide`, `AS_Skew_Tight`, `AS_Skew_Mid`, `AS_Skew_Wide`, `AS_Skew_Deep`) over a conservative FIFO L1 queue simulator (`5 ms` RTT, `100 ms` min order life, `0.5 bps` requote threshold, strict PostOnly), non-overlapping `60s` MtM buckets, mandatory EOF liquidation at `VIP-0 Taker` (`5.50 bps`), and a 5-profile fee frontier (`VIP0_Maker` `+2.00 bps` binding vs. `Venue_1bp`, `Venue_0bp`, `Rebate_05`, `Rebate_10` non-binding):
+
+```powershell
+cargo run --release -- scan-mm --format <par2|vpz1|jsonl> --input <path> [--capital-usdt <f64>] [--clip-usdt <f64>] [--max-inv-clips <f64>] [--out <report.json>]
+```
+
+- Accepted `--format` values: `par2`, `vpz1` (or `par2z`), `jsonl` (single file or directory sorted chronologically).
+- Defaults: `--capital-usdt 2000`, `--clip-usdt 100`, `--max-inv-clips 4` (`max_gross_leverage = 2.0`, `bucket = 60s`, `rtt = 5.0ms`).
 
 ---
 
@@ -140,3 +158,17 @@ Full unedited tool outputs and line-by-line forensic proofs are recorded in [`PH
   5. Banned patterns in `src/**/*.rs` — **PASS** (`0` matches)
   6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `30/30` files) — **PASS**
 - **Binding Sweep (`VIP0-Taker + 1.5 bps` slip = `7.0 bps`/turnover)**: **`0 / 27` `Pass`** (`10 Fail`, `17 InsufficientSample`, across `M = 9` and global `M = 27`; `0 / 27` in Y1/Y2 OOS and `0.5 / 3.0 bps` sensitivity; `0 / 27` reaching `t_NW >= 3.5` or `DSR >= 0.95` even under non-binding `VIP0-MakerDiag`). Details in [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md).
+
+---
+
+## 8. Phase 3A Verification Status (Track 4 — Market Making Design & Code Closure)
+
+- **Design Scope**: Purely additive Hexagonal SRP modules (`market_making.rs`, `mm_markout.rs`, `mm_fifo_sim.rs`, `mm_accounting.rs`, `falsifier_mm.rs`, `cli_mm.rs`) implementing Stoikov L1 microprice, CKS L1 OFI ($\tau = 2\text{s}$), Trade Flow Imbalance ($\tau = 5\text{s}$), EWMA volatility ($\tau = 30\text{s}$), causal `tick_e8` GCD inference, homogeneous `[bps]`-space Avellaneda-Stoikov quoting (`M = 6`), conservative `5 ms` RTT FIFO L1 queue simulator, exact `i128` accounting (`Drift == 0`), mandatory EOF `5.50 bps` Taker liquidation, and a 5-fee frontier (`VIP0_Maker` `+2.00 bps` solely binding).
+- **6 Mandatory PowerShell Gates (Current Codebase)**:
+  1. `cargo fmt --all -- --check` — **PASS** (`EXIT_CODE=0`)
+  2. `cargo clippy --all-targets --all-features -- -D warnings` — **PASS** (`EXIT_CODE=0`)
+  3. `cargo test --all-targets -- --nocapture` — **PASS** (`9 + 7 + 8 + 6 + 5 = 35` integration tests passed, `0` failed, `EXIT_CODE=0`)
+  4. File size gate (`src/**/*.rs <= 350` lines) — **PASS** (`32/32` files `Pass`, max `348` lines in `src/domain/stats.rs`)
+  5. Banned patterns in `src/**/*.rs` — **PASS** (`0` matches)
+  6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `37/37` files) — **PASS**
+- **Next Step (Phase 3B)**: Execute empirical `scan-mm` sweep on `sniper-tokio` (read-only over `/home/ubuntu/vortex-rs/data`, `--format vpz1` & `--format par2`, `$2,000 / $100` & `$1,000 / $50`). Details and copy-paste commands in [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md).
