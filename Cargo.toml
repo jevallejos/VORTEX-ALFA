@@ -1,0 +1,21 @@
+[package]
+name = "vortex-alfa"
+version = "0.1.0"
+edition = "2021"
+description = "VORTEX-ALFA Hexagonal Clean DDD core and multi-hypothesis offline falsification lab"
+
+[lib]
+name = "vortex_alfa"
+path = "src/lib.rs"
+
+[[bin]]
+name = "vortex-alfa"
+path = "src/main.rs"
+
+[dependencies]
+# Typed zero-boilerplate domain errors across hexagonal boundaries.
+thiserror = "2"
+# Serialization/deserialization for JSONL market tapes and JSON audit reports.
+serde = { version = "1", features = ["derive"] }
+# JSON decoding for JSONL tapes and structured --out report emission.
+serde_json = "1"
