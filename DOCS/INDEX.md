@@ -1,7 +1,7 @@
 # VORTEX-ALFA — Documentation Index
 
-> **Status**: Phase 0 Forensically Closed | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
-> **Primary Audit Report**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md)
+> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Empirical Falsification Complete | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
+> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md)
 
 ---
 
@@ -9,8 +9,9 @@
 
 | Document | Purpose | Scope |
 |---|---|---|
-| [`INDEX.md`](./INDEX.md) | Navigable architecture map, CLI quickstart, and Phase 0 verification summary | Workspace entrypoint |
+| [`INDEX.md`](./INDEX.md) | Navigable architecture map, CLI quickstart, and phase verification summary | Workspace entrypoint |
 | [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | Forensic closure audit: `VORTEX-L2` read-only layout inspection, file/layer/crate inventory, `LaTeX -> archivo:linea` math traceability table, 4-D compliance matrix, raw unedited 6-gate PS7 outputs, and 22-test `input -> expected -> actual` vector catalog | Complete Phase 0 sign-off |
+| [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | Empirical Track 2 falsification over 24 months of real Bybit V5 linear perpetuals (`15m`, `1h`, `4h`, 12 pairs, real funding): data integrity manifest, 36-cell primary matrix (`VIP-0 + 1.5 bps` slip), Year 1 vs. Year 2 OOS stability, `$64 USDT` Ex-BTC & per-symbol concentration audit, slippage sensitivity (`0.5 / 1.5 / 3.0 bps`) vs. `DiagZero`, raw PS gates, and final falsification verdict | Complete Phase 1A Track 2 sign-off |
 
 ---
 
@@ -92,3 +93,10 @@ All 6 mandatory PowerShell 7 quality gates pass on the clean Phase 0 codebase (`
 6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`) — **PASS**
 
 Full unedited tool outputs and line-by-line forensic proofs are recorded in [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md).
+
+---
+
+## 5. Phase 1A Verification Status (Track 2 — 24m Bybit Empirical Falsification)
+
+- **Window & Universe**: 24 exact UTC months (`2024-11-25T00:00:00Z` to `2026-11-25T00:00:00Z`), 12 Bybit V5 linear perpetuals (`BTCUSDT..LTCUSDT`), `15m` / `1h` / `4h` + real `funding/history` (`0` gaps, `0` reconciliation diff).
+- **Binding Sweep (`VIP-0 + 1.5 bps` slip = `14.0 bps` RT)**: **`0 / 36` `Pass`** (`29 Fail`, `7 InsufficientSample`, across `M=12` and global `M=36`). Track 2 with the 3 baseline signals is empirically falsified; details in [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md).
