@@ -1,7 +1,7 @@
 # VORTEX-ALFA — Documentation Index
 
-> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | Phase 3B Track 4 MM Falsified (`0/6`; `0/30` frontier) | Phase 4 Track 5 Macro `1d` Verified (`1/9 Pass`: `Carry_SpotPerp_TopCarry30d`; `41/41` tests `ok`) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
-> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md) | [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md)
+> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | Phase 3B Track 4 MM Falsified (`0/6`; `0/30` frontier) | Phase 4 Track 5 Macro `1d` Verified (`1/9 Pass`: `Carry_SpotPerp_TopCarry30d`) | Phase 5 Track 6 Carry UTA Verified (`9/9 Pass` 5y, `5/9` `R2`, `0/9` `24m`; `0/9 >= 6.0% CAGR` OOS -> **NO / Discarded** for `$1k–$2k`; `47/47` tests `ok`) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
+> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md) | [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md) | [`PHASE_5_TRACK6_CARRY_UTA_REPORT.md`](./PHASE_5_TRACK6_CARRY_UTA_REPORT.md)
 
 ---
 
@@ -17,6 +17,7 @@
 | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | Phase 3A Track 4 Market Making design & verification closure: 4-D compliance matrix, SRP hexagonal split (`market_making.rs`, `mm_markout.rs`, `mm_fifo_sim.rs`, `mm_accounting.rs`, `falsifier_mm.rs`, `cli_mm.rs`), `LaTeX -> archivo:linea` traceability + homogeneous `[bps]`-space Avellaneda-Stoikov dimensional proof, 5 ms RTT FIFO L1 state machine, `M=6` AS grid & 5-fee frontier (`VIP0_Maker` solely binding + mandatory EOF `5.50 bps` Taker), 6-test `input -> expected -> actual` catalog, raw 6-gate PS7 outputs (`35/35` tests, `32/32` `src/` files `<= 350` lines), and copy-paste `sniper-tokio` sweep commands | Complete Phase 3A Track 4 sign-off |
 | [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md) | Empirical Track 4 Market Making falsification on `sniper-tokio` (`rustc 1.99.1`, `35/35` tests ok, `--release`, read-only `/home/ubuntu/vortex-rs/data`) across 4 runs (`VPZ1` `19.47M` & `PAR2` `1.05M` events under `$2,000/$100` & `$1,000/$50`): `0/6 Pass` on binding `VIP0_Maker`, `0/30` positive across 5-fee frontier (even `-1.00 bps` rebate), `< 1s` toxicity (`93%` of damage, `MO1s = -1.12 bps`), `+157.9%` skew adverse in-flight fills (`1,134 -> 2,925`), `+3.20 bps/leg` (`+6.40 bps` RT) VIP-0 gap, `book_crossed`/`trade_through` scale invariance, `Drift == 0`, empirical closure of Camino B, and transition rationale to Track 5 Macro `1d` | Complete Phase 3B Track 4 sign-off |
 | [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md) | Empirical Track 5 Macro (`1d`) falsification over 5 years (`2021-11-25` to `2026-11-25`, `1,826` daily bars) of 12 Bybit V5 dual `linear + spot` majors (`0:BTCUSDT..11:ATOMUSDT`): 4-D compliance matrix, `audit_report.json` (`72` CSVs, `87,438` rows, `PASS`), real `BNBUSDT` Spot `2022-03-10` listing & `SOLUSDT` `[2.0, 8.0]h` causal funding aggregation, survivorship bias disclosure, `LaTeX -> archivo:linea` traceability, 9-strategy + 2-benchmark primary matrix (`1/9 Pass`: `Carry_SpotPerp_TopCarry30d` `CAGR 3.00%`, `AnnSR 4.75`, `MaxDD 0.55%`, `t_nw = 8.594`, `DSR = 0.9967`), bi-regime OOS stability (`R1` `Pass` vs `R2` `InsufficientSample` under `-53.7%` funding compression), slippage sensitivity (`0.5 / 1.5 / 3.0 bps`), `$1,000–$2,000 USDT` operational feasibility, raw 6-gate PS outputs (`41/41` tests, `40/40` `src/` files `<= 350` lines), and final verdict | Complete Phase 4 Track 5 sign-off |
+| [`PHASE_5_TRACK6_CARRY_UTA_REPORT.md`](./PHASE_5_TRACK6_CARRY_UTA_REPORT.md) | Empirical Track 6 UTA Cross-Margin & Cost-Amortized Carry falsification over 5 years (`2021-11-25` to `2026-11-25`, `1d`) across 30 Bybit V5 pairs (`29` dual `linear + spot` + `[04] TAOUSDT` perp-only): 4-D compliance matrix, `audit_report.json` (`240` CSVs, `235,464` rows, `PASS`, `106,515` sub-24h events aggregated, `UNIUSDT` `17` pre-listing API funding rows causally bounded), UTA collateral haircut & survivorship bias disclosures, `LaTeX -> archivo:linea` traceability, 9-strategy grid (`Cash50/Uta75/Uta85` × `Blind30d/Amort30d_Top4/Top2`: `9/9 Pass` 5y, `5/9 Pass` `R2`, `0/9 Pass` `24m`), economic hurdle check (`0/9 >= 6.0% CAGR` in `R2` & `24m`, max `Pass` CAGR `3.81%` in `R2`, max `2.53%` in `24m`), 12p vs. 30p & Track 5 parity ablation, `borrow_apr` (`0/15/25%`) + `slippage` (`0.5/1.5/3.0 bps`) sensitivity, `$1,000–$2,000 USDT` feasibility, raw 6-gate PS outputs (`47/47` tests, `45/45` `src/` files `<= 350` lines), and cold binary verdict (`NO — Discarded`) | Complete Phase 5 Track 6 sign-off |
 
 ---
 
@@ -47,7 +48,8 @@ src/
 │       ├── macro_vol.rs                # Track 5 vol/sizing: CausalEwmaVol (span=20 sample init, clamp [0.15, 3.00]), vol-target weight scaling & gross cap
 │       ├── macro_trend.rs              # Track 5 trend: MacroTrendFeatureEngine (GK + EWMA + 20/60/120d TSMOM) & VolTargetTrendStrategy (band 0.02)
 │       ├── macro_donchian.rs           # Track 5 breakout: DonchianBreakoutStrategy (strictly prior [t-n..=t-1] entry/exit channels, inv-vol sizing)
-│       └── spot_perp_carry.rs          # Track 5 carry: SpotPerpCarryEngine (rolling APR hysteresis, dual linear+spot filter, 1d/30d cadence, 0.5*alloc)
+│       ├── spot_perp_carry.rs          # Track 5 carry: SpotPerpCarryEngine (rolling APR hysteresis, dual linear+spot filter, 1d/30d cadence, 0.5*alloc)
+│       └── carry_uta.rs                # Track 6 carry UTA: CarryUtaEngine (BlindPeriodic vs CostAmortized payback hurdle + min_hold, coverage_ratio sizing)
 ├── application/                        # Causal multi-horizon falsification orchestrators (depend only on domain)
 │   ├── mod.rs
 │   ├── falsifier_micro.rs              # Track 1 orchestrator: RTT delay, cooldown, non-overlapping slots, VIP-0 + DiagZero dual eval
@@ -59,7 +61,10 @@ src/
 │   ├── falsifier_mm.rs                 # Track 4 orchestrator: M=6 AS grid, 60s non-overlapping buckets, max gross leverage cap, Holm/NW/DSR eval
 │   ├── macro_baselines.rs              # Track 5 baselines & equity metrics: MacroConfig, compute_equity_metrics (CAGR/AnnSR/MaxDD/Calmar), BuyHold_BTC & BuyHold_EW
 │   ├── macro_accounting.rs             # Track 5 accounting: MacroFeeProfiles (Spot 10.00 bps + Perp 5.50 bps + slip vs MakerDiag), real Spot-Perp basis, BarOpenSettlement, EOF
-│   └── falsifier_macro.rs              # Track 5 orchestrator: dual linear+spot slice alignment, Open(t+1) entry, 9-strategy Holm/NW/DSR + 2 passive benchmarks
+│   ├── falsifier_macro.rs              # Track 5 orchestrator: dual linear+spot slice alignment, Open(t+1) entry, 9-strategy Holm/NW/DSR + 2 passive benchmarks
+│   ├── carry_uta_types.rs              # Track 6 types & grid: 9-strategy default_carry_uta_grid (Cash50/Uta75/Uta85 x Blind30d/Amort30d_Top4/Top2), CarryUtaConfig
+│   ├── carry_uta_accounting.rs         # Track 6 accounting: harmonic entry px, UTA borrowed_usdt_frac & borrow_bps, recenter_trigger_pct toll, real basis + BarOpenSettlement + EOF
+│   └── falsifier_carry_uta.rs          # Track 6 orchestrator: dual linear+spot alignment, Open(t+1) entry, 9-strategy Holm/NW/DSR + MakerDiag non-binding eval
 ├── infrastructure/                     # Adapters implementing domain ports & binary codecs
 │   ├── mod.rs
 │   ├── binary_codec.rs                 # Pure-Rust FNV-1a, PAR2 (256B), VPZ1 (36B hdr, Stride-256 XOR-Delta + Zero-RLE), VKL1 (96B)
@@ -68,9 +73,10 @@ src/
 │   └── csv_candle_reader.rs            # CsvCandleReader (ts_ns|ts_ms, funding_rate_bps|funding_rate) implementing CandleSeriesReader
 └── interfaces/                         # CLI presentation & JSON ReportSink adapter
     ├── mod.rs
-    ├── cli.rs                          # Subcommands scan-micro, scan-meso, scan-xs, scan-mm & scan-macro dispatch, ASCII tables, JSON --out writer
+    ├── cli.rs                          # Subcommands scan-micro, scan-meso, scan-xs, scan-mm, scan-macro & scan-carry-uta dispatch, ASCII tables, JSON --out writer
     ├── cli_mm.rs                       # Track 4 scan-mm argument parser, ASCII table + 5-profile fee frontier formatter
-    └── cli_macro.rs                    # Track 5 scan-macro argument parser, ASCII table + passive Spot benchmarks formatter
+    ├── cli_macro.rs                    # Track 5 scan-macro argument parser, ASCII table + passive Spot benchmarks formatter
+    └── cli_carry_uta.rs                # Track 6 scan-carry-uta argument parser, ASCII table (BorrowBp/AvgUtil%/RecCnt) + JSON writer
 ```
 
 ---
@@ -134,6 +140,19 @@ cargo run --release -- scan-macro --linear-dir <dir> --spot-dir <dir> [--slippag
 
 - Requires both `--linear-dir` and `--spot-dir` (CSV directories read via `CsvCandleReader`).
 - `--slippage-bps` defaults to `1.5` bps per leg (`>= 0.0`): Perp-only strategies pay `5.50 + slip` (`7.00 bps`/turn, vs. `2.00 bps` `VIP0-MakerDiag`); dual `SpotPerpCarry` pays `(10.00 + slip) + (5.50 + slip)` (`18.50 bps`/`turn_L`, vs. `12.00 bps` `VIP0-MakerDiag`); Spot passive benchmarks pay `10.00 + slip` (`11.50 bps`/turn, vs. `10.00 bps` `VIP0-MakerDiag`).
+
+### Track 6 — UTA Cross-Margin & Cost-Amortized Carry Falsifier (`scan-carry-uta`)
+
+Evaluates $M = 9$ Spot–Perp Carry configurations crossing 3 margin regimes (`Cash50` `0.50` / `80%` recenter; `Uta75` `0.75` / `35%` recenter; `Uta85` `0.85` / `20%` recenter) with 3 selection rules (`Blind30d`, `Amort30d_Top4`, `Amort30d_Top2`), explicit UTA USDT deficit borrowing (`--borrow-apr-pct`, default `15.0%`), harmonic entry tracking, recentering fees (`2 * L_i * 18.50 bps`), real Spot–Perp basis, `BarOpenSettlement`, and EOF liquidation:
+
+```powershell
+cargo run --release -- scan-carry-uta --linear-dir <dir> --spot-dir <dir> [--slippage-bps <f64>] [--borrow-apr-pct <f64>] [--out <report.json>]
+```
+
+- Requires both `--linear-dir` and `--spot-dir` (`CsvCandleReader`).
+- `--slippage-bps` defaults to `1.5` (`>= 0.0`; `18.50 bps`/`turn_L` on binding `VIP-0` vs. `12.00 bps`/`turn_L` on non-binding `VIP0-MakerDiag`).
+- `--borrow-apr-pct` defaults to `15.0` (`>= 0.0`; daily interest `borrow_apr_pct * 100 / 365 bps` on `borrowed_usdt_frac`).
+- Integration tests live in [`tests/carry_uta_tests.rs`](../tests/carry_uta_tests.rs) (`6` tests; `47/47` total suite `ok`).
 
 ---
 
@@ -218,3 +237,17 @@ Full unedited tool outputs and line-by-line forensic proofs are recorded in [`PH
   5. Banned patterns in `src/**/*.rs` — **PASS** (`BANNED_MATCHES=0`)
   6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `46/46` files) — **PASS**
 - **Binding Sweep (`M = 9`, `t_crit = 3.5000`, `VIP-0 + 1.5 bps` slip)**: **`1 / 9` `Pass`** — **`Carry_SpotPerp_TopCarry30d`** passes 5y (`N = 1,796 >= n_min = 199`, `mean = +0.811 bps/d`, `CAGR = 3.00%`, `AnnSR = 4.75`, `MaxDD = 0.55%`, `Calmar = 5.47`, `t_nw = 8.594`, `DSR = 0.9967`), `0.5 bps` (`DSR = 0.9990`), `3.0 bps` (`DSR = 0.9773`), and `R1` (`t_nw = 7.363`, `DSR = 0.9999`), while falling to `InsufficientSample` in `R2` (`0 / 9 Pass`: `mean = +0.3665 bps/d`, `t_nw = 3.695`, `N = 884 < n_min = 1,106`, `DSR = 0.3216` due to `-53.7%` funding compression); all 6 `VolTargetTrend` and `DonchianBreakout` variants score `0 / 6 Pass` even under non-binding `VIP0-MakerDiag`. Details in [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md).
+
+---
+
+## 11. Phase 5 Verification Status (Track 6 — 30-Pair 5y Bybit UTA Cash-and-Carry)
+
+- **Window & Universe**: `5` exact UTC years (`2021-11-25T00:00:00Z` to `2026-11-25T00:00:00Z`, `1,826` daily bars; `R1 = 912d`, `R2 = 914d`, `24m = 730d`), `30` Bybit V5 pairs (`0:BTCUSDT..29:ICPUSDT`): `29` dual `linear + spot` (`100.0%` active in `24m`) + `[04] TAOUSDT` perp-only (`0` Spot bars, excluded from Carry by Law 4); `48,950` linear + `47,247` spot = `96,197` unique candles (`audit_report.json` `PASS` across `240` CSVs / `235,464` rows, `106,515` sub-24h funding events aggregated, `UNIUSDT` `17` pre-listing API funding rows causally bounded to `2021-11-30`, `0` unmatched events, `0` diff; UTA collateral haircut & survivorship bias disclosed).
+- **6 Mandatory PowerShell Gates (Current Codebase)**:
+  1. `cargo fmt --all -- --check` — **PASS** (`FMT_EXIT=0`)
+  2. `cargo clippy --all-targets --all-features -- -D warnings` — **PASS** (`CLIPPY_EXIT=0`)
+  3. `cargo test --all-targets -- --nocapture` — **PASS** (`9 + 6 + 7 + 8 + 6 + 6 + 5 = 47` integration tests passed, `0` failed, `TEST_EXIT=0`)
+  4. File size gate (`src/**/*.rs <= 350` lines) — **PASS** (`45/45` files `Pass`, max `348` lines in `src/domain/stats.rs`)
+  5. Banned patterns in `src/**/*.rs` — **PASS** (`BANNED_RECURSIVE_COUNT=0`)
+  6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `52/52` files) — **PASS**
+- **15-Scenario Binding Sweep (`M = 9`, `t_crit = 3.5000`, `18.50 bps/turn_L` + `15.0%` borrow APR)** & **Economic Hurdle (`>= 6.0% CAGR` in `R2` and `24m`)**: **`9 / 9` `Pass`** in 5y (`CAGR = 2.90%–6.12%`, `t_nw = 4.733–10.177`, `DSR = 0.9710–1.0000`), **`6 / 9` `Pass`** in `R1`, **`5 / 9` `Pass`** in `R2` (Cost-Amortized rescues statistical `Pass`, max `Pass` CAGR **`3.81%`** in `Uta75_Amort30d_Top2`, overall max `4.05%` `Fail` in `Uta85_Amort30d_Top2` with `DSR = 0.9227`), and **`0 / 9` `Pass`** in `24m` (all `InsufficientSample`, max CAGR **`2.53%`**). Because **`0 / 9`** configurations clear `>= 6.0% CAGR` with `Pass` in `R2` or `24m` (falling below `~4%–5%` USD risk-free rates before real Bybit altcoin UTA collateral haircuts and leg-risk), Phase 5 issues a **cold binary `NO` — discarded for real deployment at `$1,000–$2,000 USDT`**. Details in [`PHASE_5_TRACK6_CARRY_UTA_REPORT.md`](./PHASE_5_TRACK6_CARRY_UTA_REPORT.md).

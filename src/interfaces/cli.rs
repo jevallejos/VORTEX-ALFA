@@ -52,6 +52,7 @@ where
         "scan-xs" => run_scan_xs(&raw[2..]),
         "scan-mm" => crate::interfaces::cli_mm::run_scan_mm(&raw[2..]),
         "scan-macro" => crate::interfaces::cli_macro::run_scan_macro(&raw[2..]),
+        "scan-carry-uta" => crate::interfaces::cli_carry_uta::run_scan_carry_uta(&raw[2..]),
         "-h" | "--help" | "help" => Ok(usage_text()),
         other => Err(DomainError::Cli(format!(
             "unknown subcommand '{other}'\n{}",
@@ -61,7 +62,7 @@ where
 }
 
 fn usage_text() -> String {
-    "Usage:\n  vortex-alfa scan-micro --format <par2|vpz1|jsonl> --input <path> [--out <report.json>]\n  vortex-alfa scan-meso --format <csv|vkl1> --input <path> [--slippage-bps <f64>] [--out <report.json>]\n  vortex-alfa scan-xs --format <csv|vkl1> --input <path> [--top-k <usize[,usize...]>] [--slippage-bps <f64>] [--include-btc] [--out <report.json>]\n  vortex-alfa scan-mm --format <par2|vpz1|jsonl> --input <path> [--capital-usdt <f64>] [--clip-usdt <f64>] [--max-inv-clips <f64>] [--out <report.json>]\n  vortex-alfa scan-macro --linear-dir <dir> --spot-dir <dir> [--slippage-bps <f64>] [--out <report.json>]"
+    "Usage:\n  vortex-alfa scan-micro --format <par2|vpz1|jsonl> --input <path> [--out <report.json>]\n  vortex-alfa scan-meso --format <csv|vkl1> --input <path> [--slippage-bps <f64>] [--out <report.json>]\n  vortex-alfa scan-xs --format <csv|vkl1> --input <path> [--top-k <usize[,usize...]>] [--slippage-bps <f64>] [--include-btc] [--out <report.json>]\n  vortex-alfa scan-mm --format <par2|vpz1|jsonl> --input <path> [--capital-usdt <f64>] [--clip-usdt <f64>] [--max-inv-clips <f64>] [--out <report.json>]\n  vortex-alfa scan-macro --linear-dir <dir> --spot-dir <dir> [--slippage-bps <f64>] [--out <report.json>]\n  vortex-alfa scan-carry-uta --linear-dir <dir> --spot-dir <dir> [--slippage-bps <f64>] [--borrow-apr-pct <f64>] [--out <report.json>]"
         .to_string()
 }
 
