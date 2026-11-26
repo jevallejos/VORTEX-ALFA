@@ -1,5 +1,9 @@
 pub mod cross_sectional;
+pub mod macro_donchian;
+pub mod macro_trend;
+pub mod macro_vol;
 pub mod market_making;
 pub mod meso_energy;
 pub mod micro_detectors;
 pub mod micro_tail;
+pub mod spot_perp_carry;

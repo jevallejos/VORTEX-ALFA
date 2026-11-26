@@ -1,7 +1,7 @@
 # VORTEX-ALFA — Documentation Index
 
-> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | Phase 3A Track 4 Designed & Verified (`35/35` tests `ok`, ready for `sniper-tokio` sweep) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
-> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md)
+> **Status**: Phase 0 Forensically Closed | Phase 1A Track 2 Falsified (`0/36`) | Phase 1B Track 1 Falsified (`0/20`) | Phase 2 Track 3 Falsified (`0/27`) | Phase 3B Track 4 MM Falsified (`0/6`; `0/30` frontier) | Phase 4 Track 5 Macro `1d` Verified (`1/9 Pass`: `Carry_SpotPerp_TopCarry30d`; `41/41` tests `ok`) | **Architecture**: Hexagonal Clean DDD (`src/` <= 350 lines/file, 0 `unsafe`, 0 `unwrap`/`expect`/`panic!`)
+> **Primary Audit Reports**: [`PHASE_0_CLOSURE_REPORT.md`](./PHASE_0_CLOSURE_REPORT.md) | [`PHASE_1A_TRACK2_FALSIFICATION_REPORT.md`](./PHASE_1A_TRACK2_FALSIFICATION_REPORT.md) | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md) | [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md)
 
 ---
 
@@ -15,6 +15,8 @@
 | [`PHASE_1B_TRACK1_FALSIFICATION_REPORT.md`](./PHASE_1B_TRACK1_FALSIFICATION_REPORT.md) | Empirical Track 1 falsification on `sniper-tokio` (`rustc 1.99.1`, `--release`, read-only `/home/ubuntu/vortex-rs/data`) across `20,518,144` (`~20.52M`) real events: Run 1 `.par2z` (`VPZ1`, 12 hourly files, `19,469,568` events) + Run 2 `.parquet` (`PAR2`, `4,096 × 256 = 1,048,576` events), 20-cell `VIP-0` matrix vs. `DiagZero` range, structural `binance_mid = None` audit, and final falsification verdict (`0/20 Pass`) | Complete Phase 1B Track 1 sign-off |
 | [`PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md`](./PHASE_2_TRACK3_XS_FALSIFICATION_REPORT.md) | Empirical Track 3 cross-sectional falsification over 24 months of 30 Bybit V5 linear perpetuals (`4h`, `0:BTCUSDT..29:ICPUSDT`): causal Option A funding aggregation (`INJUSDT` 128 sub-4h events), explicit survivorship bias disclosure, `LaTeX -> archivo:linea` traceability, 27-cell matrix (`K ∈ {1,2,3} × 3 × 3`), Year 1 vs. Year 2 OOS stability, slippage sensitivity (`0.5 / 1.5 / 3.0 bps`) vs. `VIP0-MakerDiag`, `$64 USDT` sizing caveats, raw 6-gate PS7 outputs (`29/29` tests), and final falsification verdict (`0/27 Pass`) | Complete Phase 2 Track 3 sign-off |
 | [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md) | Phase 3A Track 4 Market Making design & verification closure: 4-D compliance matrix, SRP hexagonal split (`market_making.rs`, `mm_markout.rs`, `mm_fifo_sim.rs`, `mm_accounting.rs`, `falsifier_mm.rs`, `cli_mm.rs`), `LaTeX -> archivo:linea` traceability + homogeneous `[bps]`-space Avellaneda-Stoikov dimensional proof, 5 ms RTT FIFO L1 state machine, `M=6` AS grid & 5-fee frontier (`VIP0_Maker` solely binding + mandatory EOF `5.50 bps` Taker), 6-test `input -> expected -> actual` catalog, raw 6-gate PS7 outputs (`35/35` tests, `32/32` `src/` files `<= 350` lines), and copy-paste `sniper-tokio` sweep commands | Complete Phase 3A Track 4 sign-off |
+| [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md) | Empirical Track 4 Market Making falsification on `sniper-tokio` (`rustc 1.99.1`, `35/35` tests ok, `--release`, read-only `/home/ubuntu/vortex-rs/data`) across 4 runs (`VPZ1` `19.47M` & `PAR2` `1.05M` events under `$2,000/$100` & `$1,000/$50`): `0/6 Pass` on binding `VIP0_Maker`, `0/30` positive across 5-fee frontier (even `-1.00 bps` rebate), `< 1s` toxicity (`93%` of damage, `MO1s = -1.12 bps`), `+157.9%` skew adverse in-flight fills (`1,134 -> 2,925`), `+3.20 bps/leg` (`+6.40 bps` RT) VIP-0 gap, `book_crossed`/`trade_through` scale invariance, `Drift == 0`, empirical closure of Camino B, and transition rationale to Track 5 Macro `1d` | Complete Phase 3B Track 4 sign-off |
+| [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md) | Empirical Track 5 Macro (`1d`) falsification over 5 years (`2021-11-25` to `2026-11-25`, `1,826` daily bars) of 12 Bybit V5 dual `linear + spot` majors (`0:BTCUSDT..11:ATOMUSDT`): 4-D compliance matrix, `audit_report.json` (`72` CSVs, `87,438` rows, `PASS`), real `BNBUSDT` Spot `2022-03-10` listing & `SOLUSDT` `[2.0, 8.0]h` causal funding aggregation, survivorship bias disclosure, `LaTeX -> archivo:linea` traceability, 9-strategy + 2-benchmark primary matrix (`1/9 Pass`: `Carry_SpotPerp_TopCarry30d` `CAGR 3.00%`, `AnnSR 4.75`, `MaxDD 0.55%`, `t_nw = 8.594`, `DSR = 0.9967`), bi-regime OOS stability (`R1` `Pass` vs `R2` `InsufficientSample` under `-53.7%` funding compression), slippage sensitivity (`0.5 / 1.5 / 3.0 bps`), `$1,000–$2,000 USDT` operational feasibility, raw 6-gate PS outputs (`41/41` tests, `40/40` `src/` files `<= 350` lines), and final verdict | Complete Phase 4 Track 5 sign-off |
 
 ---
 
@@ -41,7 +43,11 @@ src/
 │       ├── micro_tail.rs               # Track 1 engine: HawkesTail, ShiryaevRobertsJump, LiquidationCascade, CrossExchangeShock
 │       ├── meso_energy.rs              # Track 2 engine: Garman-Klass vol, r_comp, TSMOM-VW, Z-funding Welford
 │       ├── cross_sectional.rs          # Track 3 engine: XsFundingCarry, XsResidualReversion, XsMomentumVolAdj, build_dollar_neutral_weights
-│       └── market_making.rs            # Track 4 engine: Stoikov microprice, CKS L1 OFI, TFI, EWMA vol, causal tick GCD, [bps]-space AS + PostOnly
+│       ├── market_making.rs            # Track 4 engine: Stoikov microprice, CKS L1 OFI, TFI, EWMA vol, causal tick GCD, [bps]-space AS + PostOnly
+│       ├── macro_vol.rs                # Track 5 vol/sizing: CausalEwmaVol (span=20 sample init, clamp [0.15, 3.00]), vol-target weight scaling & gross cap
+│       ├── macro_trend.rs              # Track 5 trend: MacroTrendFeatureEngine (GK + EWMA + 20/60/120d TSMOM) & VolTargetTrendStrategy (band 0.02)
+│       ├── macro_donchian.rs           # Track 5 breakout: DonchianBreakoutStrategy (strictly prior [t-n..=t-1] entry/exit channels, inv-vol sizing)
+│       └── spot_perp_carry.rs          # Track 5 carry: SpotPerpCarryEngine (rolling APR hysteresis, dual linear+spot filter, 1d/30d cadence, 0.5*alloc)
 ├── application/                        # Causal multi-horizon falsification orchestrators (depend only on domain)
 │   ├── mod.rs
 │   ├── falsifier_micro.rs              # Track 1 orchestrator: RTT delay, cooldown, non-overlapping slots, VIP-0 + DiagZero dual eval
@@ -50,7 +56,10 @@ src/
 │   ├── mm_markout.rs                   # Track 4 markout tracker: causal spread capture, 1s/5s/15s markouts, LVR = max(0, -markout)
 │   ├── mm_fifo_sim.rs                  # Track 4 FIFO L1 simulator: 5ms RTT place/replace/cancel, adverse in-flight fills, PostOnly reject, anti-churn
 │   ├── mm_accounting.rs                # Track 4 ledger (i128 Drift==0), 5-profile MM_FEE_FRONTIER, mandatory EOF taker liquidation, breakeven_maker_bps
-│   └── falsifier_mm.rs                 # Track 4 orchestrator: M=6 AS grid, 60s non-overlapping buckets, max gross leverage cap, Holm/NW/DSR eval
+│   ├── falsifier_mm.rs                 # Track 4 orchestrator: M=6 AS grid, 60s non-overlapping buckets, max gross leverage cap, Holm/NW/DSR eval
+│   ├── macro_baselines.rs              # Track 5 baselines & equity metrics: MacroConfig, compute_equity_metrics (CAGR/AnnSR/MaxDD/Calmar), BuyHold_BTC & BuyHold_EW
+│   ├── macro_accounting.rs             # Track 5 accounting: MacroFeeProfiles (Spot 10.00 bps + Perp 5.50 bps + slip vs MakerDiag), real Spot-Perp basis, BarOpenSettlement, EOF
+│   └── falsifier_macro.rs              # Track 5 orchestrator: dual linear+spot slice alignment, Open(t+1) entry, 9-strategy Holm/NW/DSR + 2 passive benchmarks
 ├── infrastructure/                     # Adapters implementing domain ports & binary codecs
 │   ├── mod.rs
 │   ├── binary_codec.rs                 # Pure-Rust FNV-1a, PAR2 (256B), VPZ1 (36B hdr, Stride-256 XOR-Delta + Zero-RLE), VKL1 (96B)
@@ -59,8 +68,9 @@ src/
 │   └── csv_candle_reader.rs            # CsvCandleReader (ts_ns|ts_ms, funding_rate_bps|funding_rate) implementing CandleSeriesReader
 └── interfaces/                         # CLI presentation & JSON ReportSink adapter
     ├── mod.rs
-    ├── cli.rs                          # Subcommands scan-micro, scan-meso, scan-xs & scan-mm dispatch, ASCII tables, JSON --out writer
-    └── cli_mm.rs                       # Track 4 scan-mm argument parser, ASCII table + 5-profile fee frontier formatter
+    ├── cli.rs                          # Subcommands scan-micro, scan-meso, scan-xs, scan-mm & scan-macro dispatch, ASCII tables, JSON --out writer
+    ├── cli_mm.rs                       # Track 4 scan-mm argument parser, ASCII table + 5-profile fee frontier formatter
+    └── cli_macro.rs                    # Track 5 scan-macro argument parser, ASCII table + passive Spot benchmarks formatter
 ```
 
 ---
@@ -114,6 +124,17 @@ cargo run --release -- scan-mm --format <par2|vpz1|jsonl> --input <path> [--capi
 - Accepted `--format` values: `par2`, `vpz1` (or `par2z`), `jsonl` (single file or directory sorted chronologically).
 - Defaults: `--capital-usdt 2000`, `--clip-usdt 100`, `--max-inv-clips 4` (`max_gross_leverage = 2.0`, `bucket = 60s`, `rtt = 5.0ms`).
 
+### Track 5 — Macro Daily (`1d`) & Spot–Perp Carry Falsifier (`scan-macro`)
+
+Evaluates $M = 9$ daily strategies across 3 families (`VolTargetTrend`: `MacroTrend_LS_Vol15`, `MacroTrend_LS_Vol30`, `MacroTrend_LO_Vol20`; `DonchianBreakout`: `Donchian_20_10_LS`, `Donchian_55_20_LS`, `Donchian_55_20_LO`; `SpotPerpCarry`: `Carry_SpotPerp_10Apr`, `Carry_SpotPerp_15Apr`, `Carry_SpotPerp_TopCarry30d`) alongside 2 passive Spot benchmarks (`Baseline_BuyHold_BTC`, `Baseline_BuyHold_EW`) over aligned `linear` and `spot` `1d` CSV directories:
+
+```powershell
+cargo run --release -- scan-macro --linear-dir <dir> --spot-dir <dir> [--slippage-bps <f64>] [--out <report.json>]
+```
+
+- Requires both `--linear-dir` and `--spot-dir` (CSV directories read via `CsvCandleReader`).
+- `--slippage-bps` defaults to `1.5` bps per leg (`>= 0.0`): Perp-only strategies pay `5.50 + slip` (`7.00 bps`/turn, vs. `2.00 bps` `VIP0-MakerDiag`); dual `SpotPerpCarry` pays `(10.00 + slip) + (5.50 + slip)` (`18.50 bps`/`turn_L`, vs. `12.00 bps` `VIP0-MakerDiag`); Spot passive benchmarks pay `10.00 + slip` (`11.50 bps`/turn, vs. `10.00 bps` `VIP0-MakerDiag`).
+
 ---
 
 ## 4. Phase 0 Verification Status
@@ -150,7 +171,7 @@ Full unedited tool outputs and line-by-line forensic proofs are recorded in [`PH
 ## 7. Phase 2 Verification Status (Track 3 — 30-Pair `4h` 24m Cross-Sectional Falsification)
 
 - **Window & Universe**: 24 exact UTC months (`2024-11-25T00:00:00Z` to `2026-11-25T00:00:00Z`), 30 Bybit V5 linear perpetuals (`0:BTCUSDT..29:ICPUSDT`), `4h` (`4,380` closed bars/sym, `100.0%` coverage, `0` gaps, `0` reconciliation diff via causal Option A half-open bucket aggregation of `128` sub-4h `INJUSDT` settlements; residual survivorship bias disclosed).
-- **6 Mandatory PowerShell Gates (Current Codebase)**:
+- **6 Mandatory PowerShell Gates (Track 3 Baseline)**:
   1. `cargo fmt --all -- --check` — **PASS** (`EXIT_CODE=0`)
   2. `cargo clippy --all-targets --all-features -- -D warnings` — **PASS** (`EXIT_CODE=0`)
   3. `cargo test --all-targets -- --nocapture` — **PASS** (`9 + 7 + 8 + 5 = 29` integration tests passed, `0` failed, `EXIT_CODE=0`)
@@ -164,11 +185,36 @@ Full unedited tool outputs and line-by-line forensic proofs are recorded in [`PH
 ## 8. Phase 3A Verification Status (Track 4 — Market Making Design & Code Closure)
 
 - **Design Scope**: Purely additive Hexagonal SRP modules (`market_making.rs`, `mm_markout.rs`, `mm_fifo_sim.rs`, `mm_accounting.rs`, `falsifier_mm.rs`, `cli_mm.rs`) implementing Stoikov L1 microprice, CKS L1 OFI ($\tau = 2\text{s}$), Trade Flow Imbalance ($\tau = 5\text{s}$), EWMA volatility ($\tau = 30\text{s}$), causal `tick_e8` GCD inference, homogeneous `[bps]`-space Avellaneda-Stoikov quoting (`M = 6`), conservative `5 ms` RTT FIFO L1 queue simulator, exact `i128` accounting (`Drift == 0`), mandatory EOF `5.50 bps` Taker liquidation, and a 5-fee frontier (`VIP0_Maker` `+2.00 bps` solely binding).
-- **6 Mandatory PowerShell Gates (Current Codebase)**:
+- **6 Mandatory PowerShell Gates (Track 4 Closure)**:
   1. `cargo fmt --all -- --check` — **PASS** (`EXIT_CODE=0`)
   2. `cargo clippy --all-targets --all-features -- -D warnings` — **PASS** (`EXIT_CODE=0`)
   3. `cargo test --all-targets -- --nocapture` — **PASS** (`9 + 7 + 8 + 6 + 5 = 35` integration tests passed, `0` failed, `EXIT_CODE=0`)
   4. File size gate (`src/**/*.rs <= 350` lines) — **PASS** (`32/32` files `Pass`, max `348` lines in `src/domain/stats.rs`)
   5. Banned patterns in `src/**/*.rs` — **PASS** (`0` matches)
   6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `37/37` files) — **PASS**
-- **Next Step (Phase 3B)**: Execute empirical `scan-mm` sweep on `sniper-tokio` (read-only over `/home/ubuntu/vortex-rs/data`, `--format vpz1` & `--format par2`, `$2,000 / $100` & `$1,000 / $50`). Details and copy-paste commands in [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md).
+- **Specification**: Full `LaTeX -> archivo:linea` proofs and `sniper-tokio` sweep commands in [`PHASE_3A_TRACK4_MM_DESIGN_REPORT.md`](./PHASE_3A_TRACK4_MM_DESIGN_REPORT.md).
+
+---
+
+## 9. Phase 3B Verification Status (Track 4 — `20.52M` Real Events MM Empirical Falsification)
+
+- **Host & Telemetry (`sniper-tokio`, `rustc 1.99.1`, `35/35` tests ok, `--release`, read-only `/home/ubuntu/vortex-rs/data`)**:
+  - **Run 1 (`VPZ1`, `$2,000 / $100`)**: `19,469,568` events, `693` buckets (`60s`), `sr_std(VIP0) = 0.6635`, `Elapsed = 1:14.42`, `Max RSS = 3,420 KB (3.34 MiB)`, `Swaps = 0`, `Exit = 0`.
+  - **Run 2 (`VPZ1`, `$1,000 / $50`)**: `Elapsed = 1:15.02`, `Max RSS = 3,436 KB`, `Swaps = 0`, `Exit = 0` — exact scale invariance (identical fills `31,508 .. 180`, exact 50% PnL `-$504.28 .. -$3.81`, identical `BrkMkr`, `t_nw`, `Drift = 0`).
+  - **Run 3 (`PAR2`, `$2,000 / $100`)**: `1,048,576` events, `52` buckets (`60s`), `sr_std(VIP0) = 0.9294`, `Elapsed = 0:11.39`, `Max RSS = 3,772 KB`, `Swaps = 0`, `Exit = 0`.
+  - **Run 4 (`PAR2`, `$1,000 / $50`)**: `Elapsed = 0:03.23`, `Max RSS = 4,072 KB`, `Swaps = 0`, `Exit = 0` — identical fills/indicators, exact 50% PnL (`-$33.02 .. -$0.26`), `Drift = 0`.
+- **Binding Sweep (`M = 6`, `VIP0_Maker` `+2.00 bps` / EOF `5.50 bps`)**: **`0 / 6` `Pass`** and **`0 / 30` positive cells** across the 5-fee frontier (even under `-1.00 bps` rebate). Root causes: `93%` of damage occurs in `< 1s` (`MO1s = -1.12 bps`), OFI+TFI skew increased adverse in-flight fills by `+157.9%` (`1,134 -> 2,925`), VIP-0 breakeven gap is `+3.20 bps/leg` (`+6.40 bps` RT), and fills are dominated by `book_crossed`/`trade_through`. Camino B (passive L1 MM on Bybit VIP-0) is empirically falsified and closed; details in [`PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md`](./PHASE_3B_TRACK4_MM_FALSIFICATION_REPORT.md).
+
+---
+
+## 10. Phase 4 Verification Status (Track 5 — 5-Year `1d` Dual Linear+Spot Macro Falsification)
+
+- **Window & Universe**: `5` exact UTC years (`2021-11-25T00:00:00Z` to `2026-11-25T00:00:00Z`, `1,826` daily bars; `R1 = 912d`, `R2 = 914d`), `12` Bybit V5 majors (`0:BTCUSDT..11:ATOMUSDT`) in dual `linear + spot` (`21,912` linear + `21,807` spot = `43,719` unique candles; `audit_report.json` `PASS` across `72` CSVs / `87,438` rows; real `BNBUSDT` Spot `2022-03-10` listing `94.2497%` with `105` leading missing bars and `0` synthetic prices; `44,184` sub-24h funding events including `SOLUSDT` `[2.0, 8.0]h` aggregated with `0` unmatched events and `0` diff; residual survivorship bias disclosed).
+- **6 Mandatory PowerShell Gates (Current Codebase)**:
+  1. `cargo fmt --all -- --check` — **PASS** (`FMT_EXIT=0`)
+  2. `cargo clippy --all-targets --all-features -- -D warnings` — **PASS** (`CLIPPY_EXIT=0`)
+  3. `cargo test --all-targets -- --nocapture` — **PASS** (`9 + 7 + 8 + 6 + 6 + 5 = 41` integration tests passed, `0` failed, `TEST_EXIT=0`)
+  4. File size gate (`src/**/*.rs <= 350` lines) — **PASS** (`40/40` files `Pass`, max `348` lines in `src/domain/stats.rs`)
+  5. Banned patterns in `src/**/*.rs` — **PASS** (`BANNED_MATCHES=0`)
+  6. Encoding hygiene (`UTF-8 without BOM` + `LF-only` across `src/` and `tests/`, `46/46` files) — **PASS**
+- **Binding Sweep (`M = 9`, `t_crit = 3.5000`, `VIP-0 + 1.5 bps` slip)**: **`1 / 9` `Pass`** — **`Carry_SpotPerp_TopCarry30d`** passes 5y (`N = 1,796 >= n_min = 199`, `mean = +0.811 bps/d`, `CAGR = 3.00%`, `AnnSR = 4.75`, `MaxDD = 0.55%`, `Calmar = 5.47`, `t_nw = 8.594`, `DSR = 0.9967`), `0.5 bps` (`DSR = 0.9990`), `3.0 bps` (`DSR = 0.9773`), and `R1` (`t_nw = 7.363`, `DSR = 0.9999`), while falling to `InsufficientSample` in `R2` (`0 / 9 Pass`: `mean = +0.3665 bps/d`, `t_nw = 3.695`, `N = 884 < n_min = 1,106`, `DSR = 0.3216` due to `-53.7%` funding compression); all 6 `VolTargetTrend` and `DonchianBreakout` variants score `0 / 6 Pass` even under non-binding `VIP0-MakerDiag`. Details in [`PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md`](./PHASE_4_TRACK5_MACRO_FALSIFICATION_REPORT.md).
